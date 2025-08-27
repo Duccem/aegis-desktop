@@ -13,7 +13,8 @@
     "**/.hg": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    "dist-electron": true,
-    "node_modules": true
+    "dist-electron": false,
+    "node_modules": true,
+    "dist": true
   }
 }

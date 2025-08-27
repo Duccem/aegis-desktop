@@ -14,16 +14,17 @@ export default defineConfig(({ command }) => {
   const sourcemap = isServe || !!process.env.VSCODE_DEBUG;
 
   return {
+    outDir: "dist-ui",
     resolve: {
       alias: {
-        "@": path.join(__dirname, "src"),
+        "@": path.join(__dirname, "src/ui"),
       },
     },
     plugins: [
       react(),
       electron({
         main: {
-          entry: "electron/main/index.ts",
+          entry: "src/electron/main/index.ts",
           onstart(args) {
             if (process.env.VSCODE_DEBUG) {
               console.log("[startup] Electron App");
@@ -45,7 +46,7 @@ export default defineConfig(({ command }) => {
           },
         },
         preload: {
-          input: "electron/preload/index.ts",
+          input: "src/electron/preload/index.ts",
           vite: {
             build: {
               sourcemap: sourcemap ? "inline" : undefined, // #332
@@ -59,9 +60,6 @@ export default defineConfig(({ command }) => {
             },
           },
         },
-        // Ployfill the Electron and Node.js API for Renderer process.
-        // If you want use Node.js in Renderer process, the `nodeIntegration` needs to be enabled in the Main process.
-        // See 👉 https://github.com/electron-vite/vite-plugin-electron-renderer
         renderer: {},
       }),
     ],
